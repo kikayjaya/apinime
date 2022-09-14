@@ -16,18 +16,18 @@ const DownloadReferer = 'https://goload.pro/';
 const recent_release_url = `${ajax_url}ajax/page-recent-release.html`;
 
 async function vidcdn(id) {
+   let sources = [];
+    let sources_bk = [];
     try {
-        let sources = [];
-        let sources_bk = [];
         let epPage, server, $, serverUrl;
 
-        if (id.includes('episode')) {
+        if (id) {
             epPage = await axios.get(BASE_URL2 + id);
             $ = cheerio.load(epPage.data);
 
             server = $('#load_anime > div > div > iframe').attr('src');
             serverUrl = new URL('https:' + server);
-        } else serverUrl = new URL(`${goload_stream_url}?id=${id}`);
+        } else throw Error("Episode id not found")
 
         const goGoServerPage = await axios.get(serverUrl.href, {
             headers: { 'User-Agent': USER_AGENT },
@@ -41,12 +41,12 @@ async function vidcdn(id) {
 
         const fetchRes = await axios.get(
             `
-            ${serverUrl.protocol}//${serverUrl.hostname}/encrypt-ajax.php?${params}`, {
-            headers: {
-                'User-Agent': USER_AGENT,
-                'X-Requested-With': 'XMLHttpRequest',
-            },
-        }
+        ${serverUrl.protocol}//${serverUrl.hostname}/encrypt-ajax.php?${params}`, {
+                headers: {
+                    'User-Agent': USER_AGENT,
+                    'X-Requested-With': 'XMLHttpRequest',
+                },
+            }
         );
 
         const res = decryptEncryptAjaxResponse(fetchRes.data);
@@ -56,9 +56,12 @@ async function vidcdn(id) {
         res.source.forEach((source) => sources.push(source));
         res.source_bk.forEach((source) => sources_bk.push(source));
 
-        return (sources_bk);
+        return {
+            Referer: serverUrl.href,
+            sources: sources,
+            sources_bk: sources_bk,
+        };
     } catch (err) {
-        console.log(err);
         return { error: err };
     }
 }

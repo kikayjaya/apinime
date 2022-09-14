@@ -57,9 +57,9 @@ async function vidcdn(id) {
         res.source_bk.forEach((source) => sources_bk.push(source));
 
         return {
-            Referer: serverUrl.href,
+            //Referer: serverUrl.href,
             sources: sources,
-            sources_bk: sources_bk,
+            //sources_bk: sources_bk,
         };
     } catch (err) {
         return { error: err };

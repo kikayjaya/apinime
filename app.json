@@ -1,15 +1,11 @@
-"name": "GogoAnime API",
-    "description": "A free anime streaming restful API serving anime from GogoAnime.",
-    "keywords": ["express", "gogoanime", "scrapper", "api", "streaming"],
-    "website": "https://github.com/riimuru/gogoanime#readme",
-    "repository": "https://github.com/riimuru/gogoanime",
-    "logo": "https://raw.githubusercontent.com/riimuru/gogoanime/main/images/image1.png",
+{
+    "name": "AniKatsu",
+    "description": "A free anime streaming website",
+    "keywords": ["anikatsu", "gogoanime", "scrapper", "api", "streaming"],
+    "website": "https://anikatsu.ga",
+    "repository": "https://github.com/shashankktiwariii/anikatsu",
+    "logo": "https://anikatsu.ga/files/images/gitLogo.jpg",
 
-    "env": {
-        "PORT": {
-            "description": "Set PORT for the express application to run on.",
-            "value": "3000"
-        }
-    },
-    "image": "heroku/nodejs",
-    "stack": "heroku-20"
+    "image": "heroku/php",
+    "stack": "heroku-22"
+}
